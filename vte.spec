@@ -1,11 +1,11 @@
 Summary:	VTE terminal widget library
 Name:		vte
-Version:	0.34.2
+Version:	0.34.3
 Release:	1
 License:	LGPL
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/vte/0.34/%{name}-%{version}.tar.xz
-# Source0-md5:	523eae73bd93d58b9427357774956b22
+# Source0-md5:	125a72b8c2f7dcb908d47320c02cb26d
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
