@@ -1,11 +1,11 @@
 Summary:	VTE terminal widget library
 Name:		vte
-Version:	0.34.7
+Version:	0.34.8
 Release:	1
 License:	LGPL
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/vte/0.34/%{name}-%{version}.tar.xz
-# Source0-md5:	aaab625a8d3ffe1f9a95fc9cd132040e
+# Source0-md5:	b16a21d09322a41f6c82a0bdd8241467
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -56,11 +56,11 @@ Basic VTE terminal.
 %setup -q
 
 # kill gnome common deps
-sed -i -e 's/GNOME_COMPILE_WARNINGS.*//g'	\
+%{__sed} -i -e 's/GNOME_COMPILE_WARNINGS.*//g'	\
 -i -e 's/GNOME_MAINTAINER_MODE_DEFINES//g'	\
     -i -e 's/GNOME_COMMON_INIT//g'		\
     -i -e 's/GNOME_CXX_WARNINGS.*//g'		\
-    -i -e 's/GNOME_DEBUG_CHECK//g' configure.in
+    -i -e 's/GNOME_DEBUG_CHECK//g' configure.ac
 
 %build
 %{__gtkdocize}
