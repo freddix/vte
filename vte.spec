@@ -1,11 +1,13 @@
+%define		apiver	2.91
+
 Summary:	VTE terminal widget library
 Name:		vte
-Version:	0.36.1
+Version:	0.38.1
 Release:	1
 License:	LGPL
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/vte/0.36/%{name}-%{version}.tar.xz
-# Source0-md5:	e17e7a117819a4dd7641d259d9f0ddfc
+Source0:	http://ftp.gnome.org/pub/gnome/sources/vte/0.38/%{name}-%{version}.tar.xz
+# Source0-md5:	b34acede2cabc2a4f86775365352aabc
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -14,9 +16,8 @@ BuildRequires:	gtk+3-devel
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	pkg-config
+BuildRequires:	vala
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_libexecdir	%{_libdir}/%{name}-2.90
 
 %description
 The vte package contains a terminal widget for GTK+. It's used by
@@ -57,7 +58,7 @@ Basic VTE terminal.
 
 # kill gnome common deps
 %{__sed} -i -e 's/GNOME_COMPILE_WARNINGS.*//g'	\
--i -e 's/GNOME_MAINTAINER_MODE_DEFINES//g'	\
+    -i -e 's/GNOME_MAINTAINER_MODE_DEFINES//g'	\
     -i -e 's/GNOME_COMMON_INIT//g'		\
     -i -e 's/GNOME_CXX_WARNINGS.*//g'		\
     -i -e 's/GNOME_DEBUG_CHECK//g' configure.ac
@@ -96,9 +97,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/{ca@valencia,en@shaw}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%find_lang vte-2.90
+%find_lang vte-%{apiver}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -106,27 +107,28 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /usr/sbin/ldconfig
 %postun	-p /usr/sbin/ldconfig
 
-%files -f vte-2.90.lang
+%files -f vte-%{apiver}.lang
 %defattr(644,root,root,755)
 %doc NEWS README AUTHORS
-%attr(755,root,root) %ghost %{_libdir}/libvte2_90.so.?
-%attr(755,root,root) %{_libdir}/libvte2_90.so.*.*.*
-%{_libdir}/girepository-1.0/Vte-2.90.typelib
-%dir %{_libexecdir}
-%attr(2755,root,utmp) %{_libexecdir}/gnome-pty-helper
+%attr(755,root,root) %ghost %{_libdir}/libvte-%{apiver}.so.?
+%attr(755,root,root) %{_libdir}/libvte-%{apiver}.so.*.*.*
+%{_libdir}/girepository-1.0/Vte-%{apiver}.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libvte2_90.so
-%{_includedir}/vte-2.90
-%{_pkgconfigdir}/vte-2.90.pc
-%{_datadir}/gir-1.0/Vte-2.90.gir
+%attr(755,root,root) %{_libdir}/libvte-%{apiver}.so
+%{_includedir}/vte-%{apiver}
+%{_pkgconfigdir}/vte-%{apiver}.pc
+%{_datadir}/gir-1.0/Vte-%{apiver}.gir
+%{_datadir}/vala/vapi/vte-%{apiver}.vapi
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/vte-2.90
+%{_gtkdocdir}/vte-%{apiver}
 
 %files terminal
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/vte2_90
+%attr(755,root,root) %{_bindir}/vte-%{apiver}
+%config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.sh
+
 
